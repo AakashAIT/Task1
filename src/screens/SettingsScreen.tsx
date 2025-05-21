@@ -1,10 +1,12 @@
 import { Text } from '@react-navigation/elements';
 import { StyleSheet, View } from 'react-native';
+import { useTheme } from '../context/ThemeContext';
 
 export function Settings() {
+   const { theme, toggleTheme } = useTheme();
   return (
-    <View style={styles.container}>
-      <Text>Settings Screen</Text>
+<View style={{ flex: 1, backgroundColor: theme.background, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: theme.textPrimary }}>Settings Screen</Text>
     </View>
   );
 }
