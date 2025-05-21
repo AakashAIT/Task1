@@ -12,6 +12,8 @@ const lightTheme = {
   border: Colors.borderLight,
   error: Colors.error,
   status: Colors.statusLight,
+  cardbackground:'#FFFFFF',
+  cardBorder:'#E0E0E0'
 };
 
 const darkTheme = {
@@ -25,6 +27,8 @@ const darkTheme = {
   border: Colors.borderDark,
   error: Colors.errorDark,
   status: Colors.statusDark,
+  cardbackground:'#1E1E1E',
+  cardBorder:'#333333'
 };
 
 export { lightTheme, darkTheme };

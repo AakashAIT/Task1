@@ -36,6 +36,9 @@ const Colors = {
   // Misc
   statusLight: 'gray',
   statusDark: '#000',
+  //Button
+  lightButton:"#BFDBFE",
+  darkButton:'#2563EB' 
 };
 
 export default Colors;

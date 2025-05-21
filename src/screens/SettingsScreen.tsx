@@ -7,6 +7,7 @@ import useStrings from '../i18n/strings';
 import Strings from '../constants/strings';
 import ThemeToggle from '../components/ThemeToggle';
 import LanguageToggle from '../components/LanguageToggle';
+import { AppText } from '../components/AppText';
 
 export function Settings() {
   const { theme } = useTheme();
@@ -18,6 +19,9 @@ export function Settings() {
         {t(Strings.settingsTitle)}
       </Text>
 
+        {/* <AppText style={[styles.subtitle, { color: theme.textSecondary }]}>
+          {t(Strings.greetings)}
+        </AppText> */}
       <View style={styles.section}>
         <Text style={[styles.label, { color: theme.textSecondary }]}>
           {t(Strings.toggleTheme)}
@@ -42,6 +46,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 30,
+  },
+  subtitle: {
+    fontSize: 18,
   },
   title: {
     fontSize: 24,

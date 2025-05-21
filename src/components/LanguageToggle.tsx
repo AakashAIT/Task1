@@ -26,7 +26,7 @@ const LanguageToggle: React.FC = () => {
       <View style={styles.toggleContainer}>
         <Animated.View style={[styles.slider, { transform: [{ translateX }] }]} />
         <Text style={[styles.label, language === 'en' && styles.active]}>EN</Text>
-        <Text style={[styles.label, language === 'ta' && styles.active]}>தமி</Text>
+        <Text style={[styles.label, language === 'ta' && styles.active]}>TA</Text>
       </View>
     </Pressable>
   );
