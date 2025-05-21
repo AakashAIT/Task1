@@ -20,6 +20,7 @@ const RootStack = createNativeStackNavigator({
     Settings: {
       screen: Settings,
       options: ({ navigation }) => ({
+        headerShown: false,
         presentation: 'modal',
         headerRight: () => (
           <HeaderButton onPress={navigation.goBack}>

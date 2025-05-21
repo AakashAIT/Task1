@@ -1,26 +1,41 @@
 // src/constants/colors.js
 
 const Colors = {
-  primary: '#4F46E5',        // Indigo 600
-  primaryLight: '#6366F1',   // Indigo 500
-  primaryDark: '#4338CA',    // Indigo 700
+  // Primary Colors
+  primary: '#4F46E5',        
+  primaryLight: '#6366F1',   
+  primaryDark: '#4338CA',    
 
-  secondary: '#10B981',      // Emerald 500
-  secondaryLight: '#34D399', // Emerald 400
-  secondaryDark: '#059669',  // Emerald 600
+  // Secondary Colors
+  secondary: '#10B981',     
+  secondaryLight: '#34D399', 
+  secondaryDark: '#059669',  
 
-  background: '#FFFFFF',     // White
-  surface: '#F3F4F6',        // Gray-100
-  border: '#E5E7EB',         // Gray-200
+  // Neutrals
+  backgroundLight: '#FFFFFF',
+  backgroundDark: '#111827',
+  surfaceLight: '#F3F4F6',
+  surfaceDark: '#1F2937',
+  borderLight: '#E5E7EB',
+  borderDark: '#374151',
 
-  textPrimary: '#111827',    // Gray-900
-  textSecondary: '#6B7280',  // Gray-500
-  textInverse: '#FFFFFF',    // White text on dark bg
+  // Text
+  textPrimaryLight: '#111827',
+  textSecondaryLight: '#6B7280',
+  textPrimaryDark: '#F9FAFB',
+  textSecondaryDark: '#9CA3AF',
+  textInverse: '#FFFFFF',
 
-  error: '#EF4444',          // Red 500
-  warning: '#F59E0B',        // Amber 500
-  success: '#10B981',        // Emerald 500
-  info: '#3B82F6',           // Blue 500
+  // Status
+  error: '#EF4444',
+  errorDark: '#F87171',
+  warning: '#F59E0B',
+  success: '#10B981',
+  info: '#3B82F6',
+
+  // Misc
+  statusLight: 'gray',
+  statusDark: '#000',
 };
 
 export default Colors;

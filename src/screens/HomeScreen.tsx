@@ -1,24 +1,38 @@
-import { Button, Text } from '@react-navigation/elements';
+// src/screens/Home.tsx
+
 import { StyleSheet, View } from 'react-native';
+import { Text, Button } from '@react-navigation/elements';
 import useStrings from '../i18n/strings';
 import { useTheme } from '../context/ThemeContext';
-import { useLanguage } from '../context/LanguageContext';
 import Strings from '../constants/strings';
 
 export function Home() {
-  const { theme, toggleTheme } = useTheme();
-   const { toggleLanguage } = useLanguage();
+  const { theme } = useTheme();
   const { t } = useStrings();
+
   return (
-<View style={{ flex: 1, backgroundColor: theme.background, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: theme.textPrimary }}>Home Screen</Text>
-       <Button onPress={toggleTheme} >Toggle Theme</Button>
-      <Text style={{ color: theme.textPrimary }}>Open up 'src/App.tsx' to start working on your app!</Text>
-      <Button screen="Settings">Go to Settings</Button>
-       <Text style={{ color: theme.textPrimary, fontSize: 18 }}>{t(Strings.welcome)}</Text>
-      <Button onPress={toggleLanguage} >
-        {t(Strings.changeLanguage)}
-        </Button>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      {/* Header */}
+      <Text style={[styles.title, { color: theme.textPrimary }]}>
+        {t(Strings.homeTitle)}
+      </Text>
+
+      {/* Subtext */}
+      <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
+        {t(Strings.welcome)}
+      </Text>
+
+     
+
+      {/* Sample Body Text */}
+      {/* <Text style={[styles.infoText, { color: theme.textPrimary }]}>
+        Open up <Text style={{ fontWeight: 'bold',color: theme.textPrimary }}>src/App.tsx</Text> to start editing.
+      </Text> */}
+
+      {/* Navigation Button */}
+      <View style={styles.buttonWrapper}>
+        <Button screen="Settings">{t(Strings.settingsTitle)}</Button>
+      </View>
     </View>
   );
 }
@@ -26,8 +40,24 @@ export function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    padding: 24,
     alignItems: 'center',
-    gap: 10,
+    justifyContent: 'center',
+    gap: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 18,
+  },
+  infoText: {
+    fontSize: 16,
+    textAlign: 'center',
+    paddingHorizontal: 10,
+  },
+  buttonWrapper: {
+    marginTop: 20,
   },
 });
