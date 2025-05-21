@@ -6,7 +6,7 @@ import { Navigation } from './navigation';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, View, StyleSheet, StatusBar as RNStatusBar } from 'react-native';
+import { StyleSheet, StatusBar as RNStatusBar } from 'react-native';
 
 // Preload assets
 Asset.loadAsync([
@@ -19,19 +19,13 @@ SplashScreen.preventAutoHideAsync();
 
 // Inner App component with access to ThemeContext
 function InnerApp() {
-  const isDarkMode = useTheme();
- const { theme } = useTheme();
+  const { theme, isDarkMode } = useTheme();
 
   return (
     <>
-      {/* Render a background under the translucent status bar */}
-      {Platform.OS === 'android' && (
-        <View style={[styles.statusBarBackground, { backgroundColor: theme.status }]} />
-      )}
 
       <StatusBar
         style={isDarkMode ? 'light' : 'dark'}
-        translucent
       />
 
       <Navigation
