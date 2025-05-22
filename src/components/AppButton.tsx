@@ -8,7 +8,6 @@ import {
   ViewStyle,
   TextStyle,
   GestureResponderEvent,
-  TextProps,
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import useStrings from '../i18n/strings';
@@ -63,6 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop:5
   },
   text: {
     fontSize: 16,

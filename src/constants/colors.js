@@ -1,21 +1,13 @@
 // src/constants/colors.js
 
 const Colors = {
-  // Primary Colors
-  primary: '#4F46E5',        
-  primaryLight: '#6366F1',   
-  primaryDark: '#4338CA',    
 
-  // Secondary Colors
-  secondary: '#10B981',     
   secondaryLight: '#34D399', 
   secondaryDark: '#059669',  
 
   // Neutrals
   backgroundLight: '#FFFFFF',
   backgroundDark: '#111827',
-  surfaceLight: '#F3F4F6',
-  surfaceDark: '#1F2937',
   borderLight: '#E5E7EB',
   borderDark: '#374151',
 
@@ -29,16 +21,19 @@ const Colors = {
   // Status
   error: '#EF4444',
   errorDark: '#F87171',
-  warning: '#F59E0B',
-  success: '#10B981',
-  info: '#3B82F6',
 
-  // Misc
-  statusLight: 'gray',
-  statusDark: '#000',
+  //button
+  BlueBtn: '#007BFF',
+  //Card
+  shadow: '#000',
+  cardbackgroundLight: '#FFFFFF',
+  cardBorderLight: '#E0E0E0',
+  cardbackgroundDark: '#1E1E1E',
+  cardBorderDark: '#333333',
+
   //Button
-  lightButton:"#BFDBFE",
-  darkButton:'#2563EB' 
+  lightButton: "#BFDBFE",
+  darkButton: '#2563EB'
 };
 
 export default Colors;

@@ -1,20 +1,34 @@
 // src/context/ThemeContext.js
-
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { lightTheme, darkTheme } from '../theme/theme';
 
-// Create the context
 const ThemeContext = createContext();
 
-// Create a provider component
 export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isThemeReady, setIsThemeReady] = useState(false); // loading flag
 
-  const toggleTheme = () => {
-    setIsDarkMode((prevMode) => !prevMode);
+  useEffect(() => {
+    const loadTheme = async () => {
+      const savedTheme = await AsyncStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        setIsDarkMode(true);
+      }
+      setIsThemeReady(true);
+    };
+    loadTheme();
+  }, []);
+
+  const toggleTheme = async () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    await AsyncStorage.setItem('theme', newMode ? 'dark' : 'light');
   };
 
   const theme = isDarkMode ? darkTheme : lightTheme;
+
+  if (!isThemeReady) return null; // or show splash / loading component
 
   return (
     <ThemeContext.Provider value={{ theme, isDarkMode, toggleTheme }}>
@@ -23,5 +37,4 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the theme
 export const useTheme = () => useContext(ThemeContext);

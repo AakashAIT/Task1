@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from '../screens/HomeScreen';
 import { Settings } from '../screens/SettingsScreen';
 import { NotFound } from '../screens/NotFound';
-
+import { ProfileScreen } from '../screens/ProfileScreen';
 const RootStack = createNativeStackNavigator({
   screens: {
     HomeTabs: {
@@ -29,6 +29,13 @@ const RootStack = createNativeStackNavigator({
         ),
       }),
     },
+     Profile: {
+      screen: ProfileScreen,
+      options: {
+        title: 'Profile',
+        headerShown: false,
+      },
+    },
     NotFound: {
       screen: NotFound,
       options: {
@@ -47,6 +54,6 @@ type RootStackParamList = StaticParamList<typeof RootStack>;
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
+    interface RootParamList extends RootStackParamList { }
   }
 }

@@ -18,10 +18,9 @@ export function Settings() {
       <Text style={[styles.title, { color: theme.textPrimary }]}>
         {t(Strings.settingsTitle)}
       </Text>
-
-        {/* <AppText style={[styles.subtitle, { color: theme.textSecondary }]}>
-          {t(Strings.greetings)}
-        </AppText> */}
+      <AppText style={[styles.subtitle, { color: theme.textSecondary }]}>
+        {t(Strings.greetings)}
+      </AppText>
       <View style={styles.section}>
         <Text style={[styles.label, { color: theme.textSecondary }]}>
           {t(Strings.toggleTheme)}

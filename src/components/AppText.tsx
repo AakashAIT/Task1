@@ -12,8 +12,8 @@ export const AppText: React.FC<AppTextProps> = ({ children, style, ...rest }) =>
   const { theme, isDarkMode } = useTheme();
   return (
     <Text
-      style={[styles.text,isDarkMode ? styles.darkText : styles.lightText // ← This is correct
-, style]}
+      style={[styles.text, isDarkMode ? styles.darkText : styles.lightText // ← This is correct
+        , style]}
       {...rest}
     >
       {children}
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   text: {
     lineHeight: 30,
   },
-   lightText: {
+  lightText: {
     color: Colors.textPrimaryLight,
     fontSize: 16,
   },
