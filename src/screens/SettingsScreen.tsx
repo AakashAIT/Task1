@@ -22,16 +22,16 @@ export function Settings() {
         {t(Strings.greetings)}
       </AppText>
       <View style={styles.section}>
-        <Text style={[styles.label, { color: theme.textSecondary }]}>
+        <AppText style={[styles.label, { color: theme.textSecondary }]}>
           {t(Strings.toggleTheme)}
-        </Text>
+        </AppText>
         <ThemeToggle />
       </View>
 
       <View style={styles.section}>
-        <Text style={[styles.label, { color: theme.textSecondary }]}>
+        <AppText style={[styles.label, { color: theme.textSecondary }]}>
           {t(Strings.changeLanguage)}
-        </Text>
+        </AppText>
         <LanguageToggle />
       </View>
     </View>

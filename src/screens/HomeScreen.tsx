@@ -1,6 +1,6 @@
 // src/screens/Home.tsx
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, FlatList, Alert, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, FlatList, Alert, TouchableOpacity, TextInput, ActivityIndicator,Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import useStrings from '../i18n/strings';
@@ -27,21 +27,23 @@ export function Home() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Item[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
+   const [error, setError] = useState<Error | null>(null);
+
   useEffect(() => {
     setTimeout(() => {
       fetch('https://jsonplaceholder.typicode.com/posts')
         .then((response) => response.json())
         .then((json) => {
-          setData(json.slice(0, 10)); // Limit to 10 items
+          setData(json.slice(0, 10));
           setLoading(false);
         })
-        .catch((error) => {
-          console.error(error);
+        .catch((err) => {
+          setError(new Error('Something went wrong during fetch'));
           setLoading(false);
         });
-    }, 2000); // Simulate 2 second delay
+    }, 2000);
   }, []);
-
+  if (error) throw error;
   if (loading) {
     return (
       <View style={styles.emptyContainer}>
@@ -104,11 +106,23 @@ export function Home() {
               {t(Strings.counterTitle)} : {count}
             </AppText>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 12 }}>
-              <AppButton title="-" onPress={() => setCount(count - 1)} disabled={count === 0} />
+              <AppButton title="-" onPress={() => 
+                setCount(count - 1)} disabled={count === 0} />
               <AppButton title="+" onPress={() => setCount(count + 1)} />
             </View>
           </Card>
-
+          <AppButton
+            title={t(Strings.searchTitle)}
+            onPress={() => navigation.navigate('Search')}
+          />
+          <AppButton
+            title={t(Strings.notificationTitle)}
+            onPress={() => navigation.navigate('Notification')}
+          />
+          <AppButton
+            title={t(Strings.helpScreenTitle)}
+            onPress={() => navigation.navigate('Help')}
+          />
           <AppButton
             title={t(Strings.settingsTitle)}
             onPress={() => navigation.navigate('Settings')}
@@ -154,15 +168,15 @@ export function Home() {
               </View>
             )}
           />
-      
+
         </Card>
-          <CustomModal
-          visible={modalVisible}
-          onClose={() => setModalVisible(false)}
-          title={t(Strings.modalTitle)}
-          message={t(Strings.modalMessage)}
-          confirmText={t(Strings.close)}
-        />
+
+        <CustomModal visible={modalVisible} onClose={() => setModalVisible(false)}>
+          <Text style={[styles.subtitle]} >{t(Strings.modalTitle)}</Text>
+          <Text style={[styles.subtitle]}>{t(Strings.modalMessage)}</Text>
+          <AppButton title={t(Strings.close)} onPress={() => setModalVisible(false)} />
+        </CustomModal>
+
       </ScrollView>
 
 

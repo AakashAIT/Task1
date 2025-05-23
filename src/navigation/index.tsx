@@ -8,6 +8,9 @@ import { Home } from '../screens/HomeScreen';
 import { Settings } from '../screens/SettingsScreen';
 import { NotFound } from '../screens/NotFound';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import { NotificationScreen } from '../screens/NotificationScreen';
+import { HelpScreen } from '../screens/HelpScreen';
+import { SearchScreen } from '../screens/SearchScreen';
 const RootStack = createNativeStackNavigator({
   screens: {
     HomeTabs: {
@@ -33,6 +36,27 @@ const RootStack = createNativeStackNavigator({
       screen: ProfileScreen,
       options: {
         title: 'Profile',
+        headerShown: false,
+      },
+    },
+    Notification: {
+      screen: NotificationScreen,
+      options: {
+        title: 'Notification',
+        headerShown: false,
+      },
+    },
+    Help: {
+      screen: HelpScreen,
+      options: {
+        title: 'HelpScreen',
+        headerShown: false,
+      },
+    },
+    Search: {
+      screen: SearchScreen,
+      options: {
+        title: 'Search Screen',
         headerShown: false,
       },
     },

@@ -1,109 +1,150 @@
-import { View, Text, KeyboardAvoidingView, Platform, TextInput, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
-import { AppButton } from '../components/AppButton';
-import { AppText } from '../components/AppText';
-import { Card } from '../components/Card';
-import Strings from '../constants/strings';
-import { validateName, validateEmail } from '../utils/validation';
+import React from 'react';
+import {
+  Image,
+  StyleSheet,
+  TextInput,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ViewStyle,
+} from 'react-native';
 import { useTheme } from '../context/ThemeContext';
+import { AppText } from '../components/AppText';
+import { AppButton } from '../components/AppButton';
+import Strings from '../constants/strings';
 import useStrings from '../i18n/strings';
-import { useNavigation } from '@react-navigation/native';
-import ThemeToggle from '../components/ThemeToggle';
-import LanguageToggle from '../components/LanguageToggle';
+import { Card } from '../components/Card';
+import { validateName, validateEmail } from '../utils/validation';
+import { useUserContext } from '../context/UserContext';
+import { useForm } from '../hooks/useForm';
+
+interface UserProfile {
+  name: string;
+  email: string;
+  avatar?: string;
+  
+}
 
 export function ProfileScreen() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [nameError, setNameError] = useState<string | null>(null);
-    const [emailError, setEmailError] = useState<string | null>(null);
-    const { theme } = useTheme();
-    const { t } = useStrings();
-    const navigation =useNavigation();
+  const { theme } = useTheme();
+  const { t } = useStrings();
+  const { user, setUser } = useUserContext();
 
-    return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={[styles.container, { backgroundColor: theme.background }]}
-        >
-             <ThemeToggle />
-            <LanguageToggle/>
+  const validate = (values: UserProfile) => {
+    const errors: Partial<Record<keyof UserProfile, string>> = {};
+    const nameErr = validateName(values.name);
+    const emailErr = validateEmail(values.email);
 
-            <Card>
-                <AppText style={[styles.subtitle, { color: theme.textPrimary }]}>
-                    {t(Strings.nameField)}</AppText>
-                <TextInput
-                    value={name}
-                    onChangeText={(text) => {
-                        setName(text);
-                        setNameError(null);
-                    }}
-                    placeholder={t(Strings.enterName)}
-                    placeholderTextColor={theme.textSecondary}
-                    style={[styles.inputStyle, {
-                        borderColor: theme.border,
-                        backgroundColor: theme.card,
-                        color: theme.textPrimary,
-                    }]}
-                />
-                {nameError && <AppText style={{ color: 'red' }}>{t(nameError)}</AppText>}
+    if (nameErr) errors.name = nameErr;
+    if (emailErr) errors.email = emailErr;
+    return errors;
+  };
 
-                     <AppText style={[styles.subtitle, { color: theme.textPrimary }]}>
-                    {t(Strings.emailField)}</AppText>
-                <TextInput
-                    value={email}
-                    onChangeText={(text) => {
-                        setEmail(text);
-                        setEmailError(null);
-                    }}
-                    placeholder="you@example.com"
-                    placeholderTextColor={theme.textSecondary}
-                    style={[styles.inputStyle, {
-                        borderColor: theme.border,
-                        backgroundColor: theme.card,
-                        color: theme.textPrimary,
-                    }]}
-                    keyboardType="email-address"
-                />
-                {emailError && <AppText style={{ color: 'red' }}>{t(emailError)}</AppText>}
+  const { values, errors, handleChange, handleSubmit } = useForm<UserProfile>({
+    initialValues: user,
+    validate,
+    onSubmit: (formData : any) => {
+      setUser(formData);
+      Alert.alert(t(Strings.success), t(Strings.profileUpdated));
+    },
+  });
 
-                <AppButton
-                    title={t(Strings.submitLabel)}
-                    onPress={() => {
-                        const nameErr = validateName(name);
-                        const emailErr = validateEmail(email);
-                        setNameError(nameErr);
-                        setEmailError(emailErr);
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
+      <AppText style={styles.title}>{t(Strings.profileTitle)}</AppText>
 
-                        if (!nameErr && !emailErr) {
-                            console.log('Form submitted:', { name, email });
-                            navigation.navigate('HomeTabs')
-                        }
-                    }}
-                    style={{ marginTop: 16 }}
-                />
-            </Card>
-        </KeyboardAvoidingView>
-    )
+      <Card>
+        <Image
+          source={{
+            uri:
+              user.avatar ||
+              'https://img.freepik.com/premium-vector/student-avatar-illustration-user-profile-icon-youth-avatar_118339-4395.jpg',
+          }}
+          style={styles.avatar}
+        />
+
+        <AppText style={[styles.label, { color: theme.textSecondary }]}>
+          {t(Strings.nameLabel)}
+        </AppText>
+        <TextInput
+          value={values.name}
+          onChangeText={(text) => handleChange('name', text)}
+          placeholder={t(Strings.enterName)}
+          placeholderTextColor={theme.textSecondary}
+          style={[
+            styles.input,
+            {
+              borderColor: theme.border,
+              backgroundColor: theme.card,
+              color: theme.textPrimary,
+            },
+          ]}
+        />
+        {errors.name && <AppText style={styles.error}>{t(errors.name)}</AppText>}
+
+        <AppText style={[styles.label, { color: theme.textSecondary }]}>
+          {t(Strings.emailLabel)}
+        </AppText>
+        <TextInput
+          value={values.email}
+          onChangeText={(text) => handleChange('email', text)}
+          placeholder={t(Strings.emailField)}
+          placeholderTextColor={theme.textSecondary}
+          keyboardType="email-address"
+          style={[
+            styles.input,
+            {
+              borderColor: theme.border,
+              backgroundColor: theme.card,
+              color: theme.textPrimary,
+            },
+          ]}
+        />
+        {errors.email && <AppText style={styles.error}>{t(errors.email)}</AppText>}
+
+        <AppButton title={t(Strings.save)} onPress={handleSubmit} style={{ marginTop: 16 }} />
+      </Card>
+    </KeyboardAvoidingView>
+  );
 }
+
 const styles = StyleSheet.create({
-
-    container: {
-        flex: 1,
-        padding: 24,
-        justifyContent: 'center',
-        gap: 16,
-    },
-    inputStyle: {
-        borderWidth: 1,
-        padding: 12,
-        borderRadius: 8,
-        marginBottom: 4,
-    },
-      subtitle: {
-    fontSize: 18,
+  container: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+  } as ViewStyle,
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    alignSelf: 'center',
   },
-
-
+  avatar: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignSelf: 'center',
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginTop: 12,
+  },
+  input: {
+    height: 48,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    marginTop: 4,
+  },
+  error: {
+    color: 'red',
+    marginTop: 4,
+    fontSize: 12,
+  },
 });
-
-

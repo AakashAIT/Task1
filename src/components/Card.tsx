@@ -1,18 +1,31 @@
 import React from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle, Dimensions } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import Colors from '../constants/colors';
 
 interface CardProps {
   children: React.ReactNode;
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
 }
+
+const { width } = Dimensions.get('window');
+const isSmallDevice = width < 360;
 
 export const Card: React.FC<CardProps> = ({ children, style }) => {
   const { theme } = useTheme();
 
   return (
-    <View style={[styles.card, { backgroundColor: theme.cardbackground }, { borderColor: theme.cardBorder }, style]}>
+    <View
+      style={[
+        styles.card,
+        {
+          backgroundColor: theme.cardbackground,
+          borderColor: theme.cardBorder,
+          padding: isSmallDevice ? 12 : 16,
+        },
+        style,
+      ]}
+    >
       {children}
     </View>
   );
@@ -20,7 +33,6 @@ export const Card: React.FC<CardProps> = ({ children, style }) => {
 
 const styles = StyleSheet.create({
   card: {
-    padding: 16,
     borderRadius: 12,
     borderWidth: 1,
     shadowColor: Colors.shadow,
@@ -30,6 +42,5 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginBottom: 16,
     justifyContent: 'space-between',
-    gap: 15
   },
 });
